@@ -10,7 +10,7 @@ public class Constant
     public static final String INACTIVE_USERNAME = "unknow_user@gmail.com";
     public static final String INACTIVE_PASSWORD = "12345678";
     public static final String NEW_PASSWORD = "1234567888";
-    public static final String DEPART_DATE = "5/4/2025"; // Ngày hiện tại (24/04/2025) + 10 ngày
+    public static final String DEPART_DATE = "5/4/2025";
     public static final String DEPART_STATION = "Sài Gòn";
     public static final String ARRIVE_STATION = "Nha Trang";
     public static final String SEAT_TYPE = "Soft bed";

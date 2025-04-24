@@ -3,11 +3,14 @@ package Railway;
 import Constant.Constant;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BookTicketTest {
@@ -30,7 +33,7 @@ public class BookTicketTest {
 
         // Login with valid credentials
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        loginPage.login("example@gmail.com", "123456788");
 
         // Navigate to Book Ticket page
         BookTicketPage bookTicketPage = homePage.gotoBookTicketPage();
@@ -48,6 +51,34 @@ public class BookTicketTest {
         if (!actualSuccessMessage.equals(expectedSuccessMessage)) {
             System.out.println("Error message is not displayed as expected");
         }
+    }
+
+    @Test(description = "TC015: User can book ticket from Timetable")
+    public void TC015() {
+        System.out.println("TC015 - User can book ticket from Timetable");
+        HomePage homePage = new HomePage();
+        homePage.open();
+
+        // Step 1: Login
+        LoginPage loginPage = homePage.gotoLoginPage();
+        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+
+        // Step 1.1: Wait for "Timetable" tab to appear after successful login
+        GeneralPage generalPage = new GeneralPage();
+        WebDriverWait wait = new WebDriverWait(Constant.WEBDRIVER, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(generalPage.getTimetableTab()));
+
+        // Step 2: Go to Timetable and select book ticket
+        TimetablePage timetablePage = new TimetablePage();
+        timetablePage.clickBookTicket("Huế", "Sài Gòn", "7:30");
+
+        // Step 3: Verify selected values
+        BookTicketPage bookTicketPage = new BookTicketPage();
+        String selectedDepart = bookTicketPage.getDepartFrom();
+        String selectedArrive = bookTicketPage.getArriveAt();
+
+        boolean match = selectedDepart.equals("Huế") && selectedArrive.equals("Sài Gòn");
+        Assert.assertTrue(match, "Selected departure or arrival station does not match expected values.");
     }
 
     @Test(description = "TC16: User can cancel a ticket")
@@ -109,7 +140,7 @@ public class BookTicketTest {
         System.out.println("Post-condition");
         if (Constant.WEBDRIVER != null) {
             Constant.WEBDRIVER.quit();
-            Constant.WEBDRIVER = null; // Reset to avoid reusing closed driver
+            Constant.WEBDRIVER = null;
         }
     }
 }

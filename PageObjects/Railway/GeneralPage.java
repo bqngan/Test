@@ -10,6 +10,7 @@ public class GeneralPage {
     private By changePasswordTab = By.xpath("//a[@href='/Account/ChangePassword.cshtml']");
     private By logoutTab = By.xpath("//a[@href='/Account/Logout']");
     private By welcomeMessage = By.xpath("//div[@class='account']/strong");
+    private By timetableTab = By.linkText("Timetable");
 
     // Check if tabs (My ticket, Change password, Logout) are displayed
     public boolean areTabsDisplayed() {
@@ -34,5 +35,10 @@ public class GeneralPage {
     public String getWelcomeMessage() {
         WebElement element = Constant.WEBDRIVER.findElement(welcomeMessage);
         return element.getText().trim();
+    }
+
+    // Get Timetable tab locator
+    public By getTimetableTab() {
+        return timetableTab;
     }
 }
