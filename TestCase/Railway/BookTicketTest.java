@@ -24,7 +24,15 @@ public class BookTicketTest {
         Constant.WEBDRIVER = new ChromeDriver();
         Constant.WEBDRIVER.manage().window().maximize();
     }
-
+   @Test
+    public void TCO4()
+    {
+        HomePage homePage=new HomePage();
+        homePage.open();
+        homePage.gotoBookTicketPage();
+        String currentUrl = Constant.WEBDRIVER.getCurrentUrl();
+        assertTrue(currentUrl.contains("/Account/Login.cshtml"), "Không chuyển sang trang Login như mong đợi!");;
+    }
     @Test
     public void TC14() {
         System.out.println("TC14 - User can book a ticket successfully after logging in");
