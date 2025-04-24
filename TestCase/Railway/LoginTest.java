@@ -60,7 +60,33 @@ public class LoginTest {
             System.out.println("Error message is not displayed as expected");
         }
     }
+    @Test
+    public void TC05() {
+        LoginPage loginPage=new LoginPage();
+        String username = "tensai";
+        String password = "123";
+        loginPage.enterUsername(username);
+        for (int i = 0; i < 4; i++) {
+            loginPage.enterPassword(password);
+            loginPage.clickLoginButton();
 
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Lấy message lỗi sau lần login thứ 4
+        String actualMessage = String.valueOf(loginPage.getLblLoginErrorMsg());
+        String expectedMessage = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
+
+        // Kiểm tra thông báo lỗi
+        System.out.println("Actual message: " + actualMessage);
+        Assert.assertTrue(actualMessage.contains(expectedMessage),
+                "Expected lockout warning.\nActual: " + actualMessage);
+
+    }
     @Test
     public void TC06() {
         System.out.println("TC06 - User can log into Railway with valid username and password");
