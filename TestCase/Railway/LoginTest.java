@@ -62,7 +62,9 @@ public class LoginTest {
     }
     @Test
     public void TC05() {
-        LoginPage loginPage=new LoginPage();
+        HomePage homePage = new HomePage();
+        homePage.open();
+        LoginPage loginPage = homePage.gotoLoginPage();
         String username = "tensai";
         String password = "123";
         loginPage.enterUsername(username);
