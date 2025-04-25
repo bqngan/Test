@@ -10,6 +10,8 @@ public class LoginPage {
     private By passwordField = By.id("password");
     private By loginButton = By.xpath("//input[@value='Login']");
     private By errorMessageLabel = By.xpath("//p[contains(@class, 'message') and contains(@class, 'error')]");
+    private By ForgotPassword= By.xpath("//a[@href='/Account/ForgotPassword.cshtml']");
+
 
     // Enter username
     public void enterUsername(String username) {
@@ -36,5 +38,9 @@ public class LoginPage {
     // Get error message element
     public WebElement getLblLoginErrorMsg() {
         return Constant.WEBDRIVER.findElement(errorMessageLabel);
+    }
+    public void clickForgotPassword()
+    {
+        Constant.WEBDRIVER.findElement(ForgotPassword).click();
     }
 }
